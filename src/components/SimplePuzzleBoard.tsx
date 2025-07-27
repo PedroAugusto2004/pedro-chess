@@ -101,7 +101,7 @@ const PuzzleBoardDisplay = ({
   const isLightSquare = (file: number, rank: number) => (file + rank) % 2 === 0;
 
   return (
-    <div className="grid grid-cols-8 gap-0 w-96 h-96 mx-auto border-2 border-glass-border rounded-lg overflow-hidden shadow-glass-lg">
+    <div className="grid grid-cols-8 gap-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto border-2 border-glass-border rounded-lg overflow-hidden shadow-glass-lg">
       {ranks.map((rank, rankIndex) =>
         files.map((file, fileIndex) => {
           const square = file + rank;
@@ -114,7 +114,7 @@ const PuzzleBoardDisplay = ({
             <div
               key={square}
               className={`
-                w-12 h-12 flex items-center justify-center text-2xl cursor-pointer transition-all
+                w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center text-lg sm:text-xl lg:text-2xl cursor-pointer transition-all
                 ${isLight ? 'bg-chess-light' : 'bg-chess-dark'}
                 ${isSelected ? 'ring-2 ring-primary' : ''}
                 ${isLegalMove ? 'bg-chess-move' : ''}
@@ -122,7 +122,17 @@ const PuzzleBoardDisplay = ({
               `}
               onClick={() => onSquareClick(square)}
             >
-              {getPieceSymbol(piece)}
+              {piece && (
+                <span className={`
+                  ${piece.color === 'w' 
+                    ? 'text-white [text-shadow:2px_2px_4px_rgba(0,0,0,0.8),_0_0_8px_rgba(255,255,255,0.3)]' 
+                    : 'text-gray-900 [text-shadow:2px_2px_4px_rgba(255,255,255,0.9),_0_0_8px_rgba(0,0,0,0.5)]'
+                  }
+                  font-bold filter brightness-110
+                `}>
+                  {getPieceSymbol(piece)}
+                </span>
+              )}
             </div>
           );
         })
@@ -275,7 +285,7 @@ export const SimplePuzzleBoard = () => {
   const progress = (solutionIndex / currentPuzzle.solution.length) * 100;
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-4 sm:space-y-6 p-3 sm:p-4 lg:p-6">
       {/* Header */}
       <div className="text-center space-y-4">
         <h2 className="text-3xl font-bold">Chess Puzzles</h2>
@@ -292,9 +302,9 @@ export const SimplePuzzleBoard = () => {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
         {/* Puzzle Info */}
-        <Card className="glass-strong p-6 lg:w-80">
+        <Card className="glass-strong p-4 sm:p-6 lg:w-80 order-2 lg:order-1">
           <div className="space-y-6">
             {/* Puzzle Details */}
             <div className="space-y-3">
@@ -389,7 +399,7 @@ export const SimplePuzzleBoard = () => {
         </Card>
 
         {/* Chess Board */}
-        <Card className="glass-strong p-6 flex-1">
+        <Card className="glass-strong p-4 sm:p-6 flex-1 order-1 lg:order-2">
           <div className="text-center mb-4">
             <h3 className="text-lg font-semibold">Solve the Puzzle</h3>
             <p className="text-sm text-muted-foreground">Click to select and move pieces</p>

@@ -34,7 +34,7 @@ const ChessBoardDisplay = ({
   const getPieceSymbol = (piece: any) => {
     if (!piece) return '';
     
-    // Premium Unicode chess pieces
+    // Premium Unicode chess pieces with consistent styling
     const symbols: Record<string, string> = {
       'wK': '♔', 'wQ': '♕', 'wR': '♖', 'wB': '♗', 'wN': '♘', 'wP': '♙',
       'bK': '♚', 'bQ': '♛', 'bR': '♜', 'bB': '♝', 'bN': '♞', 'bP': '♟'
@@ -47,20 +47,20 @@ const ChessBoardDisplay = ({
 
   return (
     <div className="relative">
-      {/* Board coordinates */}
-      <div className="absolute -left-4 top-0 h-full flex flex-col justify-around text-xs text-muted-foreground font-medium">
+      {/* Board coordinates - Mobile responsive */}
+      <div className="absolute -left-3 sm:-left-4 top-0 h-full flex flex-col justify-around text-xs text-muted-foreground font-medium">
         {ranks.map(rank => (
-          <div key={rank} className="h-12 flex items-center">{rank}</div>
+          <div key={rank} className="h-10 sm:h-12 flex items-center">{rank}</div>
         ))}
       </div>
-      <div className="absolute -bottom-4 left-0 w-full flex justify-around text-xs text-muted-foreground font-medium">
+      <div className="absolute -bottom-3 sm:-bottom-4 left-0 w-full flex justify-around text-xs text-muted-foreground font-medium">
         {files.map(file => (
-          <div key={file} className="w-12 flex justify-center">{file}</div>
+          <div key={file} className="w-10 sm:w-12 flex justify-center">{file}</div>
         ))}
       </div>
       
-      {/* Chess board */}
-      <div className="grid grid-cols-8 gap-0 w-96 h-96 mx-auto border-2 border-glass-border rounded-xl overflow-hidden shadow-glass-lg backdrop-blur-glass">
+      {/* Chess board - Mobile responsive */}
+      <div className="grid grid-cols-8 gap-0 w-80 h-80 sm:w-96 sm:h-96 mx-auto border-2 border-glass-border rounded-xl overflow-hidden shadow-glass-lg backdrop-blur-glass">
         {ranks.map((rank, rankIndex) =>
           files.map((file, fileIndex) => {
             const square = file + rank;
@@ -73,7 +73,7 @@ const ChessBoardDisplay = ({
               <div
                 key={square}
                 className={`
-                  w-12 h-12 flex items-center justify-center text-3xl cursor-pointer transition-all duration-200 relative
+                  w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-2xl sm:text-3xl cursor-pointer transition-all duration-200 relative
                   ${isLight ? 'bg-chess-light' : 'bg-chess-dark'}
                   ${isSelected ? 'ring-2 ring-primary ring-inset shadow-glass' : ''}
                   ${isLegalMove ? 'bg-chess-move shadow-inner' : ''}
@@ -85,7 +85,7 @@ const ChessBoardDisplay = ({
                 {/* Legal move indicator */}
                 {isLegalMove && !piece && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-3 h-3 rounded-full bg-chess-move border-2 border-primary/50 animate-pulse"></div>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-chess-move border-2 border-primary/50 animate-pulse"></div>
                   </div>
                 )}
                 
@@ -93,14 +93,15 @@ const ChessBoardDisplay = ({
                 {piece && (
                   <div className={`
                     relative transition-transform duration-200 hover:scale-110
-                    ${piece.color === 'w' ? 'drop-shadow-md' : 'drop-shadow-lg'}
+                    ${piece.color === 'w' ? 'drop-shadow-md' : 'drop-shadow-md'}
                     ${isSelected ? 'scale-110 animate-pulse' : ''}
                   `}>
                     <span className={`
                       ${piece.color === 'w' 
-                        ? 'text-white [text-shadow:1px_1px_2px_rgba(0,0,0,0.8)]' 
-                        : 'text-gray-900 [text-shadow:1px_1px_2px_rgba(255,255,255,0.3)]'
+                        ? 'text-white [text-shadow:2px_2px_4px_rgba(0,0,0,0.8),_0_0_8px_rgba(255,255,255,0.3)]' 
+                        : 'text-gray-900 [text-shadow:2px_2px_4px_rgba(255,255,255,0.9),_0_0_8px_rgba(0,0,0,0.5)]'
                       }
+                      font-bold filter brightness-110
                     `}>
                       {getPieceSymbol(piece)}
                     </span>
@@ -296,9 +297,9 @@ export const EnhancedChessBoard = ({ difficulty = 'beginner' }: EnhancedChessBoa
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 p-6">
+    <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 p-3 sm:p-4 lg:p-6">
       {/* Game Info Panel */}
-      <Card className="glass-strong p-6 lg:w-80 border-glass-border">
+      <Card className="glass-strong p-4 sm:p-6 lg:w-80 border-glass-border order-2 lg:order-1">
         <div className="space-y-6">
           {/* Game Status */}
           <div className="text-center">
@@ -382,7 +383,7 @@ export const EnhancedChessBoard = ({ difficulty = 'beginner' }: EnhancedChessBoa
       </Card>
 
       {/* Chess Board */}
-      <Card className="glass-strong p-8 flex-1 border-glass-border">
+      <Card className="glass-strong p-4 sm:p-6 lg:p-8 flex-1 border-glass-border order-1 lg:order-2">
         <div className="text-center mb-6">
           <h3 className="text-xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
             {t('pedro_chess_board')}
