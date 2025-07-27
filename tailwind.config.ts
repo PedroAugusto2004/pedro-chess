@@ -26,11 +26,15 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					light: 'hsl(var(--primary-light))',
+					dark: 'hsl(var(--primary-dark))',
+					foreground: 'hsl(var(--primary-foreground))',
+					glass: 'var(--primary-glass)'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+					foreground: 'hsl(var(--secondary-foreground))',
+					glass: 'var(--secondary-glass)'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -52,6 +56,18 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				glass: {
+					card: 'var(--glass-card)',
+					border: 'var(--glass-border)',
+					hover: 'var(--hover-glass)',
+					active: 'var(--active-glass)'
+				},
+				chess: {
+					light: 'hsl(var(--chess-light))',
+					dark: 'hsl(var(--chess-dark))',
+					highlight: 'hsl(var(--chess-highlight))',
+					move: 'hsl(var(--chess-move))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -67,6 +83,14 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			backdropBlur: {
+				glass: '20px',
+				'glass-strong': '30px'
+			},
+			boxShadow: {
+				glass: 'var(--glass-shadow)',
+				'glass-lg': 'var(--glass-shadow-lg)'
 			},
 			keyframes: {
 				'accordion-down': {
