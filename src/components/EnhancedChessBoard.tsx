@@ -6,12 +6,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { RotateCcw, Cpu, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
-interface SimpleChessBoardProps {
+interface EnhancedChessBoardProps {
   difficulty?: 'beginner' | 'intermediate' | 'advanced' | 'expert';
 }
 
-// Simple chess board visualization
+// Enhanced chess pieces with better Unicode symbols and styling
 const ChessBoardDisplay = ({ 
   position, 
   onSquareClick,
@@ -29,49 +30,97 @@ const ChessBoardDisplay = ({
   const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   const ranks = ['8', '7', '6', '5', '4', '3', '2', '1'];
 
+  // Enhanced piece symbols with better styling
   const getPieceSymbol = (piece: any) => {
     if (!piece) return '';
+    
+    // Premium Unicode chess pieces
     const symbols: Record<string, string> = {
       'wK': '♔', 'wQ': '♕', 'wR': '♖', 'wB': '♗', 'wN': '♘', 'wP': '♙',
       'bK': '♚', 'bQ': '♛', 'bR': '♜', 'bB': '♝', 'bN': '♞', 'bP': '♟'
     };
+    
     return symbols[piece.color + piece.type.toUpperCase()] || '';
   };
 
   const isLightSquare = (file: number, rank: number) => (file + rank) % 2 === 0;
 
   return (
-    <div className="grid grid-cols-8 gap-0 w-96 h-96 mx-auto border-2 border-glass-border rounded-lg overflow-hidden shadow-glass-lg">
-      {ranks.map((rank, rankIndex) =>
-        files.map((file, fileIndex) => {
-          const square = file + rank;
-          const piece = board[rankIndex][fileIndex];
-          const isLight = isLightSquare(fileIndex, rankIndex);
-          const isSelected = selectedSquare === square;
-          const isLegalMove = legalMoves.includes(square);
-          
-          return (
-            <div
-              key={square}
-              className={`
-                w-12 h-12 flex items-center justify-center text-2xl cursor-pointer transition-all
-                ${isLight ? 'bg-chess-light' : 'bg-chess-dark'}
-                ${isSelected ? 'ring-2 ring-primary' : ''}
-                ${isLegalMove ? 'bg-chess-move' : ''}
-                hover:opacity-80
-              `}
-              onClick={() => onSquareClick(square)}
-            >
-              {getPieceSymbol(piece)}
-            </div>
-          );
-        })
-      )}
+    <div className="relative">
+      {/* Board coordinates */}
+      <div className="absolute -left-4 top-0 h-full flex flex-col justify-around text-xs text-muted-foreground font-medium">
+        {ranks.map(rank => (
+          <div key={rank} className="h-12 flex items-center">{rank}</div>
+        ))}
+      </div>
+      <div className="absolute -bottom-4 left-0 w-full flex justify-around text-xs text-muted-foreground font-medium">
+        {files.map(file => (
+          <div key={file} className="w-12 flex justify-center">{file}</div>
+        ))}
+      </div>
+      
+      {/* Chess board */}
+      <div className="grid grid-cols-8 gap-0 w-96 h-96 mx-auto border-2 border-glass-border rounded-xl overflow-hidden shadow-glass-lg backdrop-blur-glass">
+        {ranks.map((rank, rankIndex) =>
+          files.map((file, fileIndex) => {
+            const square = file + rank;
+            const piece = board[rankIndex][fileIndex];
+            const isLight = isLightSquare(fileIndex, rankIndex);
+            const isSelected = selectedSquare === square;
+            const isLegalMove = legalMoves.includes(square);
+            
+            return (
+              <div
+                key={square}
+                className={`
+                  w-12 h-12 flex items-center justify-center text-3xl cursor-pointer transition-all duration-200 relative
+                  ${isLight ? 'bg-chess-light' : 'bg-chess-dark'}
+                  ${isSelected ? 'ring-2 ring-primary ring-inset shadow-glass' : ''}
+                  ${isLegalMove ? 'bg-chess-move shadow-inner' : ''}
+                  hover:brightness-110 hover:scale-105
+                  ${piece ? 'hover:shadow-lg' : ''}
+                `}
+                onClick={() => onSquareClick(square)}
+              >
+                {/* Legal move indicator */}
+                {isLegalMove && !piece && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-3 h-3 rounded-full bg-chess-move border-2 border-primary/50 animate-pulse"></div>
+                  </div>
+                )}
+                
+                {/* Chess piece with enhanced styling */}
+                {piece && (
+                  <div className={`
+                    relative transition-transform duration-200 hover:scale-110
+                    ${piece.color === 'w' ? 'drop-shadow-md' : 'drop-shadow-lg'}
+                    ${isSelected ? 'scale-110 animate-pulse' : ''}
+                  `}>
+                    <span className={`
+                      ${piece.color === 'w' 
+                        ? 'text-white [text-shadow:1px_1px_2px_rgba(0,0,0,0.8)]' 
+                        : 'text-gray-900 [text-shadow:1px_1px_2px_rgba(255,255,255,0.3)]'
+                      }
+                    `}>
+                      {getPieceSymbol(piece)}
+                    </span>
+                  </div>
+                )}
+                
+                {/* Square highlight for captures */}
+                {isLegalMove && piece && (
+                  <div className="absolute inset-0 ring-2 ring-red-400 ring-inset rounded-sm animate-pulse opacity-80"></div>
+                )}
+              </div>
+            );
+          })
+        )}
+      </div>
     </div>
   );
 };
 
-export const SimpleChessBoard = ({ difficulty = 'beginner' }: SimpleChessBoardProps) => {
+export const EnhancedChessBoard = ({ difficulty = 'beginner' }: EnhancedChessBoardProps) => {
   const [game, setGame] = useState(new Chess());
   const [gameStatus, setGameStatus] = useState<'playing' | 'check' | 'checkmate' | 'draw'>('playing');
   const [currentPlayer, setCurrentPlayer] = useState<'white' | 'black'>('white');
@@ -80,6 +129,7 @@ export const SimpleChessBoard = ({ difficulty = 'beginner' }: SimpleChessBoardPr
   const [selectedSquare, setSelectedSquare] = useState<string | null>(null);
   const [legalMoves, setLegalMoves] = useState<string[]>([]);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     updateGameStatus();
@@ -90,14 +140,14 @@ export const SimpleChessBoard = ({ difficulty = 'beginner' }: SimpleChessBoardPr
       setGameStatus('checkmate');
       const winner = game.turn() === 'w' ? 'Black' : 'White';
       toast({
-        title: "Game Over!",
-        description: `${winner} wins by checkmate!`,
+        title: t('game_over'),
+        description: t('wins_by_checkmate', { winner }),
       });
     } else if (game.isDraw()) {
       setGameStatus('draw');
       toast({
-        title: "Game Over!",
-        description: "The game is a draw!",
+        title: t('game_over'),
+        description: t('game_is_draw'),
       });
     } else if (game.inCheck()) {
       setGameStatus('check');
@@ -163,7 +213,7 @@ export const SimpleChessBoard = ({ difficulty = 'beginner' }: SimpleChessBoardPr
       setIsThinking(false);
       setSelectedSquare(null);
       setLegalMoves([]);
-    }, 500 + Math.random() * 1500);
+    }, 800 + Math.random() * 1200);
   };
 
   const onSquareClick = (square: string) => {
@@ -171,11 +221,10 @@ export const SimpleChessBoard = ({ difficulty = 'beginner' }: SimpleChessBoardPr
 
     try {
       if (selectedSquare) {
-        // Try to make a move
         const newGame = new Chess(game.fen());
         const move = newGame.move({
-          from: selectedSquare,
-          to: square,
+          from: selectedSquare as any,
+          to: square as any,
           promotion: 'q'
         });
 
@@ -184,12 +233,10 @@ export const SimpleChessBoard = ({ difficulty = 'beginner' }: SimpleChessBoardPr
           setSelectedSquare(null);
           setLegalMoves([]);
           
-          // Make AI move after player move
           if (newGame.turn() === 'b' && !newGame.isGameOver()) {
-            setTimeout(makeAiMove, 300);
+            setTimeout(makeAiMove, 400);
           }
         } else {
-          // Invalid move, try selecting new piece
           selectSquare(square);
         }
       } else {
@@ -226,8 +273,8 @@ export const SimpleChessBoard = ({ difficulty = 'beginner' }: SimpleChessBoardPr
     setSelectedSquare(null);
     setLegalMoves([]);
     toast({
-      title: "New Game",
-      description: "The board has been reset. Good luck!",
+      title: t('new_game'),
+      description: t('board_reset'),
     });
   };
 
@@ -242,63 +289,64 @@ export const SimpleChessBoard = ({ difficulty = 'beginner' }: SimpleChessBoardPr
   };
 
   const getStatusIcon = () => {
-    if (gameStatus === 'checkmate') return '♔';
+    if (gameStatus === 'checkmate') return '👑';
     if (gameStatus === 'check') return '⚠️';
     if (gameStatus === 'draw') return '🤝';
     return currentPlayer === 'white' ? '♔' : '♚';
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 p-6">
+    <div className="flex flex-col lg:flex-row gap-8 p-6">
       {/* Game Info Panel */}
-      <Card className="glass-strong p-6 lg:w-80">
+      <Card className="glass-strong p-6 lg:w-80 border-glass-border">
         <div className="space-y-6">
           {/* Game Status */}
           <div className="text-center">
-            <div className="text-4xl mb-2">{getStatusIcon()}</div>
+            <div className="text-5xl mb-3 animate-bounce">{getStatusIcon()}</div>
             <h3 className="text-lg font-semibold mb-2">
-              {gameStatus === 'playing' ? `${currentPlayer === 'white' ? 'White' : 'Black'} to move` : 
-               gameStatus === 'check' ? 'Check!' :
-               gameStatus === 'checkmate' ? 'Checkmate!' : 'Draw!'}
+              {gameStatus === 'playing' ? 
+                (currentPlayer === 'white' ? t('white_to_move') : t('black_to_move')) : 
+               gameStatus === 'check' ? t('check') :
+               gameStatus === 'checkmate' ? t('checkmate') : t('draw')}
             </h3>
             {isThinking && (
-              <Badge variant="secondary" className="glass">
-                <Cpu className="w-4 h-4 mr-1 animate-pulse" />
-                AI Thinking...
+              <Badge variant="secondary" className="glass animate-pulse">
+                <Cpu className="w-4 h-4 mr-1 animate-spin" />
+                {t('ai_thinking')}
               </Badge>
             )}
           </div>
 
           {/* Difficulty Selection */}
           <div className="space-y-3">
-            <label className="text-sm font-medium">AI Difficulty</label>
+            <label className="text-sm font-medium">{t('ai_difficulty')}</label>
             <Select value={selectedDifficulty} onValueChange={(value) => setSelectedDifficulty(value as typeof selectedDifficulty)}>
-              <SelectTrigger className="glass">
+              <SelectTrigger className="glass border-glass-border">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="glass-strong border-glass-border">
                 <SelectItem value="beginner">
                   <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${getDifficultyColor('beginner')}`} />
-                    Beginner
+                    {t('beginner')}
                   </div>
                 </SelectItem>
                 <SelectItem value="intermediate">
                   <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${getDifficultyColor('intermediate')}`} />
-                    Intermediate
+                    {t('intermediate')}
                   </div>
                 </SelectItem>
                 <SelectItem value="advanced">
                   <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${getDifficultyColor('advanced')}`} />
-                    Advanced
+                    {t('advanced')}
                   </div>
                 </SelectItem>
                 <SelectItem value="expert">
                   <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${getDifficultyColor('expert')}`} />
-                    Expert
+                    {t('expert')}
                   </div>
                 </SelectItem>
               </SelectContent>
@@ -307,44 +355,48 @@ export const SimpleChessBoard = ({ difficulty = 'beginner' }: SimpleChessBoardPr
 
           {/* Players */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 rounded-lg glass">
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                <span className="font-medium">You</span>
+            <div className="flex items-center justify-between p-4 rounded-lg glass border border-glass-border">
+              <div className="flex items-center gap-3">
+                <User className="w-5 h-5 text-primary" />
+                <span className="font-medium">{t('you')}</span>
               </div>
-              <div className="text-2xl">♔</div>
+              <div className="text-3xl">♔</div>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-lg glass">
-              <div className="flex items-center gap-2">
-                <Cpu className="w-4 h-4" />
-                <span className="font-medium">Pedro AI</span>
+            <div className="flex items-center justify-between p-4 rounded-lg glass border border-glass-border">
+              <div className="flex items-center gap-3">
+                <Cpu className="w-5 h-5 text-primary" />
+                <span className="font-medium">{t('pedro_ai')}</span>
               </div>
-              <div className="text-2xl">♚</div>
+              <div className="text-3xl">♚</div>
             </div>
           </div>
 
           {/* Controls */}
-          <div className="space-y-2">
-            <Button onClick={resetGame} variant="outline" className="w-full glass">
+          <div className="space-y-3">
+            <Button onClick={resetGame} variant="glass" className="w-full border-glass-border hover:shadow-glass-lg transition-all duration-300">
               <RotateCcw className="w-4 h-4 mr-2" />
-              New Game
+              {t('new_game')}
             </Button>
           </div>
         </div>
       </Card>
 
       {/* Chess Board */}
-      <Card className="glass-strong p-6 flex-1">
-        <div className="text-center mb-4">
-          <h3 className="text-lg font-semibold">Pedro Chess Board</h3>
-          <p className="text-sm text-muted-foreground">Click a piece to select, then click destination</p>
+      <Card className="glass-strong p-8 flex-1 border-glass-border">
+        <div className="text-center mb-6">
+          <h3 className="text-xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
+            {t('pedro_chess_board')}
+          </h3>
+          <p className="text-sm text-muted-foreground mt-2">{t('click_instruction')}</p>
         </div>
-        <ChessBoardDisplay
-          position={game.fen()}
-          onSquareClick={onSquareClick}
-          selectedSquare={selectedSquare}
-          legalMoves={legalMoves}
-        />
+        <div className="flex justify-center">
+          <ChessBoardDisplay
+            position={game.fen()}
+            onSquareClick={onSquareClick}
+            selectedSquare={selectedSquare}
+            legalMoves={legalMoves}
+          />
+        </div>
       </Card>
     </div>
   );

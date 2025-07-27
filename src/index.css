@@ -7,60 +7,60 @@ All colors MUST be HSL for consistency */
 
 @layer base {
   :root {
-    /* Glass Background Gradients */
-    --glass-gradient-primary: linear-gradient(135deg, hsla(213, 100%, 50%, 0.1), hsla(213, 100%, 70%, 0.05));
-    --glass-gradient-secondary: linear-gradient(135deg, hsla(0, 0%, 100%, 0.15), hsla(0, 0%, 100%, 0.05));
-    --glass-gradient-dark: linear-gradient(135deg, hsla(220, 26%, 14%, 0.8), hsla(220, 26%, 18%, 0.6));
+    /* Enhanced Glass Background Gradients */
+    --glass-gradient-primary: linear-gradient(135deg, hsla(213, 100%, 60%, 0.12), hsla(213, 100%, 80%, 0.06));
+    --glass-gradient-secondary: linear-gradient(135deg, hsla(0, 0%, 100%, 0.18), hsla(0, 0%, 100%, 0.08));
+    --glass-gradient-accent: linear-gradient(135deg, hsla(213, 100%, 50%, 0.15), hsla(270, 100%, 70%, 0.08));
     
-    /* Core Colors - Blue, White, Black Theme */
-    --background: 213 100% 96%;
-    --foreground: 220 26% 14%;
+    /* Enhanced Core Colors - Blue, White, Black Theme */
+    --background: 213 100% 97%;
+    --foreground: 220 26% 12%;
 
-    /* Glass Card System */
+    /* Enhanced Glass Card System */
     --card: 0 0% 100%;
-    --card-foreground: 220 26% 14%;
-    --glass-card: hsla(0, 0%, 100%, 0.1);
-    --glass-border: hsla(0, 0%, 100%, 0.2);
+    --card-foreground: 220 26% 12%;
+    --glass-card: hsla(0, 0%, 100%, 0.15);
+    --glass-border: hsla(213, 100%, 60%, 0.25);
 
-    /* Primary Blue System */
-    --primary: 213 100% 50%;
-    --primary-light: 213 100% 70%;
-    --primary-dark: 213 100% 30%;
+    /* Enhanced Primary Blue System */
+    --primary: 213 100% 55%;
+    --primary-light: 213 100% 75%;
+    --primary-dark: 213 100% 35%;
     --primary-foreground: 0 0% 100%;
-    --primary-glass: hsla(213, 100%, 50%, 0.1);
+    --primary-glass: hsla(213, 100%, 55%, 0.12);
 
-    /* Secondary System */
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 220 26% 14%;
-    --secondary-glass: hsla(0, 0%, 100%, 0.08);
+    /* Enhanced Secondary System */
+    --secondary: 0 0% 98%;
+    --secondary-foreground: 220 26% 12%;
+    --secondary-glass: hsla(0, 0%, 100%, 0.12);
 
-    /* Chess Board Colors */
-    --chess-light: 0 0% 94%;
-    --chess-dark: 213 100% 50%;
-    --chess-highlight: 45 100% 70%;
-    --chess-move: 120 100% 75%;
+    /* Enhanced Chess Board Colors */
+    --chess-light: 0 0% 96%;
+    --chess-dark: 213 100% 60%;
+    --chess-highlight: 45 100% 75%;
+    --chess-move: 120 100% 80%;
 
-    /* Glass Effects */
-    --glass-blur: blur(20px);
-    --glass-shadow: 0 8px 32px hsla(213, 100%, 50%, 0.15);
-    --glass-shadow-lg: 0 20px 40px hsla(213, 100%, 50%, 0.2);
+    /* Enhanced Glass Effects */
+    --glass-blur: blur(24px);
+    --glass-shadow: 0 12px 40px hsla(213, 100%, 55%, 0.18);
+    --glass-shadow-lg: 0 24px 60px hsla(213, 100%, 55%, 0.25);
     
-    /* Interactive States */
-    --hover-glass: hsla(213, 100%, 50%, 0.05);
-    --active-glass: hsla(213, 100%, 50%, 0.1);
+    /* Enhanced Interactive States */
+    --hover-glass: hsla(213, 100%, 55%, 0.08);
+    --active-glass: hsla(213, 100%, 55%, 0.15);
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 220 13% 46%;
+    --muted: 0 0% 97%;
+    --muted-foreground: 220 13% 48%;
 
-    --accent: 213 100% 50%;
+    --accent: 213 100% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 90%;
+    --border: 0 0% 92%;
     --input: 0 0% 100%;
-    --ring: 213 100% 50%;
+    --ring: 213 100% 55%;
 
     --radius: 0.75rem;
 
@@ -82,52 +82,52 @@ All colors MUST be HSL for consistency */
   }
 
   .dark {
-    /* Dark Mode Glass System */
-    --glass-gradient-primary: linear-gradient(135deg, hsla(213, 100%, 30%, 0.2), hsla(213, 100%, 50%, 0.1));
-    --glass-gradient-secondary: linear-gradient(135deg, hsla(220, 26%, 14%, 0.8), hsla(220, 26%, 18%, 0.6));
-    --glass-gradient-dark: linear-gradient(135deg, hsla(220, 26%, 8%, 0.9), hsla(220, 26%, 12%, 0.8));
+    /* Enhanced Dark Mode Glass System */
+    --glass-gradient-primary: linear-gradient(135deg, hsla(213, 100%, 40%, 0.25), hsla(213, 100%, 60%, 0.12));
+    --glass-gradient-secondary: linear-gradient(135deg, hsla(220, 26%, 12%, 0.9), hsla(220, 26%, 16%, 0.7));
+    --glass-gradient-accent: linear-gradient(135deg, hsla(213, 100%, 50%, 0.2), hsla(270, 100%, 60%, 0.1));
 
-    --background: 220 26% 8%;
+    --background: 220 26% 6%;
     --foreground: 0 0% 98%;
 
-    --card: 220 26% 12%;
+    --card: 220 26% 10%;
     --card-foreground: 0 0% 98%;
-    --glass-card: hsla(220, 26%, 14%, 0.3);
-    --glass-border: hsla(0, 0%, 100%, 0.1);
+    --glass-card: hsla(220, 26%, 12%, 0.4);
+    --glass-border: hsla(213, 100%, 60%, 0.3);
 
-    --primary: 213 100% 60%;
-    --primary-light: 213 100% 80%;
-    --primary-dark: 213 100% 40%;
-    --primary-foreground: 220 26% 8%;
-    --primary-glass: hsla(213, 100%, 60%, 0.15);
+    --primary: 213 100% 65%;
+    --primary-light: 213 100% 85%;
+    --primary-dark: 213 100% 45%;
+    --primary-foreground: 220 26% 6%;
+    --primary-glass: hsla(213, 100%, 65%, 0.18);
 
-    --secondary: 220 26% 14%;
+    --secondary: 220 26% 12%;
     --secondary-foreground: 0 0% 98%;
-    --secondary-glass: hsla(220, 26%, 14%, 0.3);
+    --secondary-glass: hsla(220, 26%, 12%, 0.4);
 
-    --chess-light: 220 26% 18%;
-    --chess-dark: 213 100% 40%;
-    --chess-highlight: 45 100% 60%;
-    --chess-move: 120 100% 65%;
+    --chess-light: 220 26% 16%;
+    --chess-dark: 213 100% 45%;
+    --chess-highlight: 45 100% 65%;
+    --chess-move: 120 100% 70%;
 
-    --glass-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.3);
-    --glass-shadow-lg: 0 20px 40px hsla(0, 0%, 0%, 0.4);
+    --glass-shadow: 0 12px 40px hsla(0, 0%, 0%, 0.4);
+    --glass-shadow-lg: 0 24px 60px hsla(0, 0%, 0%, 0.5);
     
-    --hover-glass: hsla(213, 100%, 60%, 0.08);
-    --active-glass: hsla(213, 100%, 60%, 0.15);
+    --hover-glass: hsla(213, 100%, 65%, 0.12);
+    --active-glass: hsla(213, 100%, 65%, 0.2);
 
-    --muted: 220 26% 14%;
-    --muted-foreground: 220 13% 65%;
+    --muted: 220 26% 12%;
+    --muted-foreground: 220 13% 68%;
 
-    --accent: 213 100% 60%;
-    --accent-foreground: 220 26% 8%;
+    --accent: 213 100% 65%;
+    --accent-foreground: 220 26% 6%;
 
-    --destructive: 0 62% 50%;
+    --destructive: 0 62% 55%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 26% 18%;
-    --input: 220 26% 14%;
-    --ring: 213 100% 60%;
+    --border: 220 26% 16%;
+    --input: 220 26% 12%;
+    --ring: 213 100% 65%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -145,28 +145,44 @@ All colors MUST be HSL for consistency */
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
     background: linear-gradient(135deg, 
       hsl(var(--background)) 0%, 
+      hsla(213, 100%, 99%, 1) 50%,
       hsla(213, 100%, 98%, 1) 100%);
     min-height: 100vh;
   }
 
-  /* Glass Morphism Utilities */
+  .dark body {
+    background: linear-gradient(135deg, 
+      hsl(var(--background)) 0%, 
+      hsla(220, 26%, 8%, 1) 50%,
+      hsla(220, 26%, 10%, 1) 100%);
+  }
+
+  /* Enhanced Glass Morphism Utilities */
   .glass {
     background: var(--glass-card);
     backdrop-filter: var(--glass-blur);
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
+    transition: all 0.3s ease;
   }
   
   .glass-strong {
     background: linear-gradient(135deg, 
       hsla(0, 0%, 100%, 0.25) 0%, 
-      hsla(0, 0%, 100%, 0.1) 100%);
+      hsla(0, 0%, 100%, 0.08) 100%);
     backdrop-filter: blur(30px);
-    border: 1px solid hsla(0, 0%, 100%, 0.3);
+    border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow-lg);
+    transition: all 0.3s ease;
+  }
+
+  .dark .glass-strong {
+    background: linear-gradient(135deg, 
+      hsla(220, 26%, 12%, 0.6) 0%, 
+      hsla(220, 26%, 8%, 0.4) 100%);
   }
 
   .chess-square-light {
@@ -175,5 +191,20 @@ All colors MUST be HSL for consistency */
   
   .chess-square-dark {
     background: hsl(var(--chess-dark));
+  }
+
+  /* Enhanced animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 }
